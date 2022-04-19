@@ -3,16 +3,16 @@
 
 import rospy
 from std_msgs.msg import Int16
+from emotions.msg import motor_spd
 
-class emotion_1:
+class emotion_1_node:
     def __init__(self):
         print("Starting emotion 1")
         self.m1 = 0
         self.m2 = 0
         self.rate = rospy.Rate(15)
 
-        self.motor1_speed_pub = rospy.Publisher("/emotion_1/m1", Int16, queue_size=1)
-        self.motor2_speed_pub = rospy.Publisher("/emotion_1/m2", Int16, queue_size=1)
+        self.motor_speed_pub = rospy.Publisher("/emotion_1/motor_spd", motor_spd, queue_size=1)
 
     def run(self):
         
@@ -22,16 +22,19 @@ class emotion_1:
 
     def count(self, start, step, stop):
         for i in range(start, stop, step):
-                self.m1 = i
-                self.m2= 100-i
-                self.motor1_speed_pub.publish(self.m1)
-                self.motor2_speed_pub.publish(self.m2)
-                self.rate.sleep()
-                if rospy.is_shutdown():
-                    return
+            self.m1 = i
+            self.m2= 100-i
+
+            speed = motor_spd()
+            speed.m1 = self.m1
+            speed.m2 = self.m2
+            self.motor_speed_pub.publish(speed)
+            self.rate.sleep()
+            if rospy.is_shutdown():
+                return
 
 if __name__ == "__main__":
     rospy.init_node("emotion_1")
 
-    e = emotion_1()
+    e = emotion_1_node()
     e.run()
