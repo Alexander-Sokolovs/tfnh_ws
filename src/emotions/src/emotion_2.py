@@ -1,8 +1,7 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
 import rospy
-from std_msgs.msg import Int16
 from emotions.msg import motor_spd
 
 class emotion_2_node:
