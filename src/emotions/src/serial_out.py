@@ -9,7 +9,7 @@ class serial_out_node:
     def __init__(self):
         print("Starting serial_out")
 
-        self.ser = serial.Serial('/dev/ttyS0', baudrate=9600)
+        self.ser = serial.Serial('/dev/ACM0', baudrate=9600)
 
         self.rate = rospy.Rate(15)
 
