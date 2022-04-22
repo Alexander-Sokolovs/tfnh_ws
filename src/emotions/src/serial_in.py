@@ -3,14 +3,14 @@
 
 import rospy
 import serial
-from std_msgs import String
+from std_msgs.msg import String
 
 class serial_in_node:
     def __init__(self):
-        print("Starting serial_out")
+        print("Starting serial_in")
 
-        self.arduino = serial.Serial('/dev/ACM0', baudrate=1000000)
-
+        self.arduino = serial.Serial('/dev/ttyACM3', baudrate=1000000)
+        rospy.sleep(1)
         self.rate = rospy.Rate(15)
 
         while not self.arduino.isOpen():
@@ -20,14 +20,19 @@ class serial_in_node:
         print("{} connected!".format(self.arduino.port))
 
         self.serial_pub = rospy.Publisher("/arduino_serial", String, queue_size=1)
+        self.run()
 
     def run(self):
-        while not rospy.is_shutdown():
-            while self.arduino.inWaiting()==0: pass
-            if self.arduino.inWaiting()>0: 
-                answer=self.arduino.readline()
-                self.serial_pub.publish(answer)
-                self.arduino.flushInput() #remove data after reading
+        print("started")
+        try:
+            while not rospy.is_shutdown():
+                while self.arduino.inWaiting()==0: pass
+                if  self.arduino.inWaiting()>0: 
+                    answer=str(self.arduino.readline())
+                    self.serial_pub.publish(answer)
+                    self.arduino.flushInput() #remove data after reading
+        except KeyboardInterrupt:
+            print("KeyboardInterrupt has been caught.")
 
 if __name__ == "__main__":
     rospy.init_node("serial_in")

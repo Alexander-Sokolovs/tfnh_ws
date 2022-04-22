@@ -9,7 +9,9 @@ class serial_out_node:
     def __init__(self):
         print("Starting serial_out")
 
-        self.arduino = serial.Serial('/dev/ACM0', baudrate=1000000)
+        self.message = ""
+
+        self.arduino = serial.Serial('/dev/ttyACM3', baudrate=1000000)
 
         self.rate = rospy.Rate(15)
 
@@ -21,10 +23,17 @@ class serial_out_node:
 
         self.prio_listener = rospy.Subscriber("/prio/motor_spd", motor_spd, self.serial_out_cb)
 
-    def serial_out_cb(self, msg):
-        message = str(msg.m1) +','+str(msg.m2)
+        self.run()
 
-        self.arduino.write(str.encode(message))
+    def run(self):
+        while not rospy.is_shutdown():
+            self.arduino.write(str.encode(self.message))
+            self.rate.sleep()
+
+    def serial_out_cb(self, msg):
+        self.message = str(msg.m1) +','+str(msg.m2)
+
+        
 
 if __name__ == "__main__":
     rospy.init_node("serial_out")
