@@ -11,7 +11,7 @@ class serial_out_node:
 
         self.message = ""
 
-        self.arduino = serial.Serial('/dev/ttyACM3', baudrate=1000000)
+        self.arduino = serial.Serial('/dev/ttyACM0', baudrate=1000000)
 
         self.rate = rospy.Rate(15)
 
@@ -31,7 +31,7 @@ class serial_out_node:
             self.rate.sleep()
 
     def serial_out_cb(self, msg):
-        self.message = str(msg.m1) +','+str(msg.m2)
+        self.message = str(msg.m1) +','+str(msg.m2) + '\n'
 
         
 

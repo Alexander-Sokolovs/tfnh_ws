@@ -9,7 +9,7 @@ class serial_in_node:
     def __init__(self):
         print("Starting serial_in")
 
-        self.arduino = serial.Serial('/dev/ttyACM3', baudrate=1000000)
+        self.arduino = serial.Serial('/dev/ttyACM0', baudrate=1000000)
         rospy.sleep(1)
         self.rate = rospy.Rate(15)
 
@@ -28,8 +28,8 @@ class serial_in_node:
             while not rospy.is_shutdown():
                 while self.arduino.inWaiting()==0: pass
                 if  self.arduino.inWaiting()>0: 
-                    answer=str(self.arduino.readline())
-                    self.serial_pub.publish(answer)
+                    answer=self.arduino.readline()
+                    self.serial_pub.publish(str(answer))
                     self.arduino.flushInput() #remove data after reading
         except KeyboardInterrupt:
             print("KeyboardInterrupt has been caught.")
