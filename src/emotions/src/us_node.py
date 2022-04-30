@@ -18,7 +18,7 @@ class ultrasound_node:
         self.trig_pins = [17]
         for i in range(len(self.echo_pins)):
             self.sensors.append(DistanceSensor(echo=self.echo_pins[i], trigger=self.trig_pins[i]))
-            self.us_pubs.append(rospy.Publisher(str("/us/distances_"+i), Int16, queue_size=1))
+            self.us_pubs.append(rospy.Publisher(str("/us/distances_"+str(i)), Int16, queue_size=1))
 
     def run(self):
         while not rospy.is_shutdown():
