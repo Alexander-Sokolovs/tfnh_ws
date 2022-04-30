@@ -31,4 +31,4 @@ if __name__ == "__main__":
     rospy.init_node("utrasound")
 
     us = ultrasound_node()
-    #us.run()
+    us.run()
