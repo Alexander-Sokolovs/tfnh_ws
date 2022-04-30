@@ -5,5 +5,7 @@
     
     <node name="serial_o" pkg="emotions"  type="serial_out.py" output="screen" required="true"/>
     <node name="serial_i" pkg="emotions"  type="serial_in.py" output="screen" required="true"/>
+    
+    <node name="ultrasonic" pkg="emotions"  type="us_node.py" output="screen" required="true"/>
 
 </launch>
