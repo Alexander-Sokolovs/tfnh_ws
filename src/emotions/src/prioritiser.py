@@ -5,6 +5,7 @@ import rospy
 import numpy as np
 
 from emotions.msg import motor_spd
+from std_msgs.msg import Int16
 
 
 class prioritiser_node:
@@ -20,6 +21,8 @@ class prioritiser_node:
         self.emotion_1_listener = rospy.Subscriber("/emotion_1/motor_spd", motor_spd,self.e1_callback)
         
         self.emotion_2_listener = rospy.Subscriber("/emotion_2/motor_spd", motor_spd,self.e2_callback)
+
+        self.us_listener = rospy.Publisher(str("/us/distances_0", Int16, queue_size=1))
 
     def run(self):
         while not rospy.is_shutdown():
