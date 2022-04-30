@@ -23,7 +23,7 @@ class ultrasound_node:
     def run(self):
         while not rospy.is_shutdown():
             for i in range(len(self.echo_pins)):
-                self.us_pubs.publish(self.sensors.distance*100)
+                self.us_pubs[i].publish(self.sensors.distance*100)
                 sleep(0.1)
             self.rate.sleep()
 
@@ -31,4 +31,4 @@ if __name__ == "__main__":
     rospy.init_node("utrasound")
 
     us = ultrasound_node()
-    us.run()
+    #us.run()
