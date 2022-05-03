@@ -4,6 +4,8 @@
     <node name="emotion_3" pkg="emotions"  type="emotion_3.py" output="screen" required="true"/>
     <node name="emotion_4" pkg="emotions"  type="emotion_4.py" output="screen" required="true"/>
     <node name="prioritiser" pkg="emotions"  type="prioritiser.py" output="screen" required="true"/>
+
+    <node name="tree_sim" pkg="emotions"  type="tree_sim.py" output="screen" required="true"/>
     
     <node name="serial_o" pkg="emotions"  type="serial_out.py" output="screen" required="true"/>
     <node name="serial_i" pkg="emotions"  type="serial_in.py" output="screen" required="true"/>

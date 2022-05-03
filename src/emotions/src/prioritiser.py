@@ -50,7 +50,7 @@ class prioritiser_node:
         speed = motor_spd()
         e4.m1*(100-self.us_distances[0])*0.5+e1.m1*0.3+e2.m1*0.1+e3.m1*0.1
         result = np.array([e4.m1*(100-self.us_distances[0])*0.5+e1.m1*0.3+e2.m1*0.1+e3.m1*0.1, e4.m2*(100-self.us_distances[0])*0.5+e1.m2*0.3+e2.m2*0.1+e3.m2*0.1])
-
+        print(result)
         speed.m1 = int(result[0])
         speed.m2 = int(result[1])
 
