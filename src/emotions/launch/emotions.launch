@@ -1,6 +1,7 @@
 <launch>
     <node name="emotion_1" pkg="emotions"  type="emotion_1.py" output="screen" required="true"/>
     <node name="emotion_2" pkg="emotions"  type="emotion_2.py" output="screen" required="true"/>
+    <node name="emotion_3" pkg="emotions"  type="emotion_3.py" output="screen" required="true"/>
     <node name="prioritiser" pkg="emotions"  type="prioritiser.py" output="screen" required="true"/>
     
     <node name="serial_o" pkg="emotions"  type="serial_out.py" output="screen" required="true"/>
