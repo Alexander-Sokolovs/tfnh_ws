@@ -13,16 +13,20 @@ class prioritiser_node:
         print("Starting prioritiser")
         self.rate = rospy.Rate(15)
 
+        self.num_us_sensors = 1
+
+        self.us_distances = np.zeros([1, self.num_us_sensors])[0]
+
         self.e1 = motor_spd()
         self.e2 = motor_spd()
 
         self.motor_speed_pub = rospy.Publisher("/prio/motor_spd", motor_spd, queue_size=1)
 
-        self.emotion_1_listener = rospy.Subscriber("/emotion_1/motor_spd", motor_spd,self.e1_callback)
+        self.emotion_1_listener = rospy.Subscriber("/emotion_1/motor_spd", motor_spd, self.e1_callback)
         
-        self.emotion_2_listener = rospy.Subscriber("/emotion_2/motor_spd", motor_spd,self.e2_callback)
+        self.emotion_2_listener = rospy.Subscriber("/emotion_2/motor_spd", motor_spd, self.e2_callback)
 
-        self.us_listener = rospy.Publisher(str("/us/distances_0", Int16, queue_size=1))
+        self.us_listener = rospy.Subscriber("/us/distances_0", Int16, self.us_callback, (0)) # continue here
 
     def run(self):
         while not rospy.is_shutdown():
@@ -39,6 +43,10 @@ class prioritiser_node:
 
         return speed
 
+## Sensor callbacks
+    def us_callback(self, msg, args):
+        self.us_distances[args[0]] = msg
+        print(msg)
 
 ## Emotion 1 ##
     def e1_callback(self, msg):
