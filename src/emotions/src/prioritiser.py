@@ -19,24 +19,37 @@ class prioritiser_node:
 
         self.e1 = motor_spd()
         self.e2 = motor_spd()
+        self.e3 = motor_spd()
+        self.e4 = motor_spd()
 
         self.motor_speed_pub = rospy.Publisher("/prio/motor_spd", motor_spd, queue_size=1)
 
         self.emotion_1_listener = rospy.Subscriber("/emotion_1/motor_spd", motor_spd, self.e1_callback)
         self.emotion_2_listener = rospy.Subscriber("/emotion_2/motor_spd", motor_spd, self.e2_callback)
         self.emotion_3_listener = rospy.Subscriber("/emotion_3/motor_spd", motor_spd, self.e3_callback)
+        self.emotion_4_listener = rospy.Subscriber("/emotion_4/motor_spd", motor_spd, self.e4_callback)
 
         self.us_listener = rospy.Subscriber("/us/distances_0", Int16, self.us_callback, (0)) # continue here
 
     def run(self):
         while not rospy.is_shutdown():
-            prio_tmp = self.priority_function_1(self.e1, self.e2, self.e3)
+            prio_tmp = self.priority_function_2(self.e1, self.e2, self.e3, self.e4)
             self.drive_motors(prio_tmp)
             self.rate.sleep()
 
-    def priority_function_1(self, e1, e2, e3):
+    def priority_function_1(self, e1, e2, e3, e4):
         speed = motor_spd()
         result = np.array([(e1.m1+e2.m1)/2, (e1.m2+e2.m2)/2])
+
+        speed.m1 = int(result[0])
+        speed.m2 = int(result[1])
+
+        return speed
+
+    def priority_function_2(self, e1, e2, e3, e4):
+        speed = motor_spd()
+        e4.m1*(100-self.us_distances[0])*0.5+e1.m1*0.3+e2.m1*0.1+e3.m1*0.1
+        result = np.array([e4.m1*(100-self.us_distances[0])*0.5+e1.m1*0.3+e2.m1*0.1+e3.m1*0.1, e4.m2*(100-self.us_distances[0])*0.5+e1.m2*0.3+e2.m2*0.1+e3.m2*0.1])
 
         speed.m1 = int(result[0])
         speed.m2 = int(result[1])
@@ -58,6 +71,10 @@ class prioritiser_node:
 ## Emotion 3 ##
     def e3_callback(self, msg):
         self.e3 = msg
+
+## Emotion 4 ##
+    def e4_callback(self, msg):
+        self.e4 = msg
 
 ## Interface to motors
     def drive_motors(self, speed):

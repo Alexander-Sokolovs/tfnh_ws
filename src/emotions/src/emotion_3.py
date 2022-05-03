@@ -13,6 +13,8 @@ class emotion_3_node:
         self.m2 = 0
         self.counter = 0
         self.rate = rospy.Rate(1)
+        
+        self.period = random.randint(1,10)
 
         self.motor_speed_pub = rospy.Publisher("/emotion_3/motor_spd", motor_spd, queue_size=1)
 
