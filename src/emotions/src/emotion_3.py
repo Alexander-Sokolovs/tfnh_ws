@@ -29,11 +29,11 @@ class emotion_3_node:
             if self.counter > self.period:
                 self.counter = 0
                 self.period = random.randint(1,10)
-                self.m1 = 100
-                self.m2 = 100
-            else:
                 self.m1 = 0
                 self.m2 = 0
+            else:
+                self.m1 = 100
+                self.m2 = 100
 
             
 
