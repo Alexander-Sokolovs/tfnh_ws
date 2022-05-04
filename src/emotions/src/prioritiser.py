@@ -11,7 +11,7 @@ from std_msgs.msg import Int16
 class prioritiser_node:
     def __init__(self):
         print("Starting prioritiser")
-        self.rate = rospy.Rate(1500)
+        self.rate = rospy.Rate(15)
 
         self.num_us_sensors = 1
 
@@ -91,8 +91,8 @@ class prioritiser_node:
         speed.m1 = int(result[0])
         speed.m2 = int(result[1])
 
-        # speed.m1 = 30
-        # speed.m2 = 20
+        # speed.m1 = e4.m1
+        # speed.m2 = e4.m2
 
         return speed
 

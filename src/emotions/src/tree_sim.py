@@ -23,7 +23,7 @@ class sim_node:
 
         self.l = 1
 
-        self.rate = rospy.Rate(1500)
+        self.rate = rospy.Rate(15)
 
         self.motor_speed_listener = rospy.Subscriber("/prio/motor_spd", motor_spd, self.spd_cb)
         self.motor_speed_listener = rospy.Subscriber("turtle1/pose", Pose, self.pose_cb)
@@ -36,8 +36,8 @@ class sim_node:
             speed_vec = (self.spd.m1 + self.spd.m2)/2
             
             twist = Twist()
-            twist.angular.z = angular/3
-            twist.linear.x = speed_vec/3
+            twist.angular.z = angular/300
+            twist.linear.x = speed_vec/300
             self.turtle_pub.publish(twist)
 
             self.rate.sleep()

@@ -11,21 +11,22 @@ class emotion_4_node:
         print("Starting emotion 4")
         self.m1 = 0
         self.m2 = 0
-        self.rate = rospy.Rate(1500)
+        self.rate = rospy.Rate(15)
 
         self.motor_speed_pub = rospy.Publisher("/emotion_4/motor_spd", motor_spd, queue_size=1)
 
     def run(self):
         
         while not rospy.is_shutdown():
-            r = (random.randint(0,20)-10)/10
+            r = (random.randint(0,30))/10
             self.count(0, 1, int(200*m.pi), r)
             self.count(int(200*m.pi), -1, 0, r)
+            print("period")
 
     def count(self, start, step, stop, r):
         for i in range(start, stop, step):
             self.m1 = int(m.sin(i/100)*100)
-            self.m2= int(m.cos(i/100*r)*100*r)
+            self.m2= int(m.cos(i*r/100)*100)
 
             speed = motor_spd()
             speed.m1 = self.m1
